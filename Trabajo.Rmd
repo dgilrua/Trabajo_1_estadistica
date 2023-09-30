@@ -133,20 +133,20 @@ El  modelo tiene un coeficiente de determinación múltiple $R^2 = 0.6012423$, l
 \section{Pregunta 2}
 \subsection{Planteamiento pruebas de hipótesis  y modelo reducido}
 
-Las covariable con el P-valor más alto en el modelo fueron $X_1, X_3, X_5$, por lo tanto a través de la tabla de todas las regresiones posibles se pretende hacer la siguiente prueba de hipótesis:
+Las covariable con el P-valor más bajo en el modelo fueron $X_1, X_3, X_5$, por lo tanto a través de la tabla de todas las regresiones posibles se pretende hacer la siguiente prueba de hipótesis:
 
 $$
 \begin{cases}
 \begin{aligned}
-\text{H}_0&: \beta_2 =\beta_4 = \beta_5 = 0\\
-\text{H}_1&: \text{Algún } \beta_j \text{ distinto de 0 para } j=2, 4, 5
+\text{H}_0&: \beta_1 =\beta_3 = \beta_5 = 0\\
+\text{H}_1&: \text{Algún } \beta_j \text{ distinto de 0 para } j=1, 3, 5
 \end{aligned}
 \end{cases}
 $$
 
 ```{r}
 todas.regresiones <- myAllRegTable(modelo)
-todas.regresiones <- todas.regresiones[c(31, 6), c(4, 6)]
+todas.regresiones <- todas.regresiones[c(31, 14), c(4, 6)]
 row.names(todas.regresiones) <- c("Modelo  completo", "Modelo reducido")
 todas.regresiones %>% 
     kable(col.names = c("$SSE$", "Covariables en el modelo"), caption = "Resumen tabla de todas las regresiones", escape=F, booktab=T, align = "c", row.names = T, digits = 4) %>% 
@@ -154,15 +154,15 @@ todas.regresiones %>%
 ```
 Luego un modelo reducido para la prueba de significancia del subconjunto es:
 
-$$Y_i = \beta_0 + \beta_1 X_{1i} + \beta_3 X_{3i} + \varepsilon; \ \varepsilon_i \stackrel{\text{iid}}{\sim} N(0, \sigma^2); \ 1 \leqslant i \leqslant 64$$
+$$Y_i = \beta_0 + \beta_2 X_{2i} + \beta_4 X_{4i} + \varepsilon; \ \varepsilon_i \stackrel{\text{iid}}{\sim} N(0, \sigma^2); \ 1 \leqslant i \leqslant 64$$
 \subsection{Estadístico de prueba y conclusión}
 Se construye el estadístico de prueba como:
 
 \begin{equation}
 \begin{split}
-F_0 &= \frac{(SSE(\beta_0, \beta_1, \beta_3) - SSE(\beta_0, \ \cdots, \ \beta_5))/3}{MSE(\beta_0, \ \cdots, \ \beta_5)} \stackrel{H_0}{\sim} f_{3, `r nrow(datos)-6`}\\
-&= \frac{2.832}{0.902188} \\
-&= 3.139035
+F_0 &= \frac{(SSE(\beta_0, \beta_2, \beta_4) - SSE(\beta_0, \ \cdots, \ \beta_5))/3}{MSE(\beta_0, \ \cdots, \ \beta_5)} \stackrel{H_0}{\sim} f_{3, `r nrow(datos)-6`}\\
+&= \frac{96.374-52.327}{0.902188} \\
+&= 48.82242
 \end{split}
 \end{equation}
 
